@@ -349,6 +349,9 @@ class Dispatcher {
       if (hunter.getPicasso().loggingEnabled) {
         log(OWNER_DISPATCHER, VERB_RETRYING, getLogIdsForHunter(hunter));
       }
+      if (hunter.exception instanceof NetworkRequestHandler.ContentLengthException) {
+        hunter.networkPolicy |= NetworkPolicy.NO_CACHE.index;
+      }
       hunter.future = service.submit(hunter);
       return;
     }
